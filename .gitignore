@@ -1,0 +1,7 @@
+.DS_Store
+.dotcloud
+*.log
+config.js
+node_modules
+*.sublime-*
+old.*

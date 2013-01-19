@@ -1,0 +1,26 @@
+{ "name": "a2p3"
+, "version": "0.0.2"
+, "description": "Node module and sample apps for A2P3 Proof of Concept"
+, "keywords": ["A2P3","a2p3","identity"]
+, "homepage": "http://a2p3.ca"
+, "author": "Dick Hardt dickhardt@gmail.com"
+, "license": "MIT"
+, "main": "./index"
+, "dependencies":
+  { "express": "*"
+  , "async": "*"
+  , "request": "*"
+  , "underscore": "*"
+  }
+, "devDependencies":
+  { "chai": "*"
+  }
+, "engines" : { "node" : "0.8.x" }
+, "repository":
+  { "type": "git"
+  , "url": "http://github.com:dickhardt/node-A2P3.git"
+  }
+, "scripts":
+  { "test": "mocha"
+  }
+}
