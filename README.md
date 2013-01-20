@@ -61,6 +61,7 @@ To use the app-registration script, you need to create a configuration JSON file
 	, "people.a2p3.net"				// to register App at
 	]								// only resources hosted at *.a2p3.net are supported
 , "registrar":		"registrar.a2p3.net"			// optional (for package development and testing)
+, "ix":				"ix.a2p3.net"					// optional
 , "registrarURL":	"https://registrar.a2p3.net" 	// optional
 , "setupURL":	"https://setup.a2p3.net" 			// optional
 , "protocol":	"https"								// optionally overide the protocol the resources are at
