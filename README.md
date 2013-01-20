@@ -53,11 +53,11 @@ The easy way to generate a vault.json file is to use the `app-registration` scri
 To use the app-registration script, you need to create a configuration JSON file containing:
 
 ```
-{ "host": 			"example.com" 			// App hostname
-, "name":			"Example App"			// App friendly name
-, "device": 		"xW8KK2J6M7Jd23PldZ3"	// CLI Agent device parameter
-, "registrar":		"registrar.a2p3.net"	// optional
-, "registrarURL":	"https://registrar.a2p3.net" // optional
+{ "host": 			"example.com" 					// App hostname
+, "name":			"Example App"					// App friendly name
+, "device": 		"xW8KK2J6M7Jd23PldZ3"			// CLI Agent device parameter
+, "registrar":		"registrar.a2p3.net"			// optional
+, "registrarURL":	"https://registrar.a2p3.net" 	// optional
 , "resources":						
 	[ "email.a2p3.net"				// array of resources
 	, "people.a2p3.net"				// to register App at
@@ -82,9 +82,9 @@ Constructor that creates an a2p3 object with the passed in configuration object 
 ```
 config =
   { host: example.com					// the hostname of the App
-  , vault: require('./vault.json')	// the keys for the App
-  , ix: ix.a2p3.net					// optional parameter to overide the IX 
-  , ixURL: https://ix.a2p3.net		// optional parameter to overide the URL to the IX
+  , vault: require('./vault.json')		// the keys for the App
+  , ix: ix.a2p3.net						// optional parameter to overide the IX 
+  , ixURL: https://ix.a2p3.net			// optional parameter to overide the URL to the IX
   }
 
 ```
