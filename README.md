@@ -58,10 +58,12 @@ To use the app-registration script, you need to create a configuration JSON file
 , "device": 		"xW8KK2J6M7Jd23PldZ3"			// CLI Agent device parameter
 , "registrar":		"registrar.a2p3.net"			// optional
 , "registrarURL":	"https://registrar.a2p3.net" 	// optional
+, "setupURL":	"https://setup.a2p3.net" 	// optional
+, "protocol":	"https"						// optionally overide the protocol the resources are at
 , "resources":						
-	[ "email.a2p3.net"				// array of resources
+	[ "email.a2p3.net"				// array of resource hostnames
 	, "people.a2p3.net"				// to register App at
-	]
+	]								// only resources hosted at *.a2p3.net are supported
 
 ```
 Assuming you have installed `a2p3` in your app directory and you have a `app-config.json` file in that directory with the above App Registration information in it, you can run:
@@ -117,7 +119,7 @@ Serializes the object so that if can be stored in a session. The resulting strin
 - params - the parameters (if supplied) to be passed in the API. The RS token will be added automatically.
 - callback( error, results ) - A callback which returns the results from the API call, or an error
 
-####Example
+##Example
 
 ```
 var a2p3 = require('a2p3')
