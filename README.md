@@ -55,7 +55,7 @@ To use the app-registration script, you need to create a configuration JSON file
 ```
 { "host": 			"example.com" 					// App hostname
 , "name":			"Example App"					// App friendly name
-, "device": 		"xW8KK2J6M7Jd23PldZ3"			// CLI Agent device parameter
+, "device": 		"NQLKKnfIc3RbY4a2JRwPTQ"		// CLI Agent device parameter
 , "resources":						
 	[ "email.a2p3.net"				// array of resource hostnames
 	, "people.a2p3.net"				// to register App at
