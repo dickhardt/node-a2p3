@@ -1,4 +1,4 @@
-/* 
+/*
 * Bank Server code
 *
 * Copyright (C) Province of British Columbia, 2013
@@ -12,7 +12,8 @@ exports.app = function() {
 		console.log(req.domain);
 		console.log(req.headers);
 	    html = 'Hello World, from the Bank!';
-	    res.send(html);    
+	    res.send(html);
 	});
 	return app
+
 }
