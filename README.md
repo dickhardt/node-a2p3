@@ -1,5 +1,11 @@
 #A2P3
 
+#WARNING - THIS DOCUMENTATION IS PREMATURE
+
+#THE HTTPS LINKS DO NOT WORK YET, IF USING, YOU WILL NEED TO OVERIDE THE ixURL and registrarURL
+>*thanks for your understanding!*
+
+
 NPM module and example apps for [A2P3](http://a2p3.ca)
 ##Install
 	npm install a2p3
