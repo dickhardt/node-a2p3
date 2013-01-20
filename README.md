@@ -66,7 +66,7 @@ To use the app-registration script, you need to create a configuration JSON file
 , "setupURL":	"https://setup.a2p3.net" 			// optional
 , "protocol":	"https"								// optionally overide the protocol the resources are at
 , "port":	443										// optionally overide the port the resources are at
-
+}
 ```
 Assuming you have installed `a2p3` in your app directory and you have a `app-config.json` file in that directory with the above App Registration information in it, you can run:
 
