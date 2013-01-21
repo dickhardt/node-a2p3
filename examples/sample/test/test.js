@@ -22,6 +22,7 @@ describe('Testing Sample App ', function () {
   var agentRequest = null
     , ixToken = null
     , jws = null
+
   describe( ' /login', function () {
     it('should return an Agent Request', function ( done ) {
       var options =
@@ -52,7 +53,7 @@ describe('Testing Sample App ', function () {
         { url: SETUP_URL + '/token'
         , method: 'POST'
         , json:
-          { device: '6OyplFmBdfYCHoCErw4hGw'  // TBD PUT THIS INTO A CONFIG OR SOMETHING!!!!
+          { device: 'N8AU-Iusj5LnF-8Vc9vLkw'  // TBD PUT THIS INTO A CONFIG OR SOMETHING!!!!
           , sar: jws.signature
           , auth:
             { passcode: true
@@ -93,7 +94,7 @@ describe('Testing Sample App ', function () {
     })
   })
 
-  describe.skip(' / (homepage) ', function () {
+  describe(' / (homepage) ', function () {
     it('should return status code of 200 and HTML', function (done) {
       var options =
         { url: HOST_URL + '/'
@@ -125,9 +126,6 @@ describe('Testing Sample App ', function () {
         should.exist( r )
         r.should.not.have.property('error')
         r.should.have.property('result')
-
-console.log('\n/profile results\n',r)
-
         done( null )
       })
     })

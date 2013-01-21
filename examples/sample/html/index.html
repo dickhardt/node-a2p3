@@ -4,7 +4,7 @@
 <style type="text/css">
   .loginStatus {text-align:right;}
   .loginItem {padding-left: 5px;}
-  #qrcodeForm{border:1px solid #999; -webkit-box-shadow: 0px 0px 6px #CCC; background-color:#FFF; width:500px; height:520px; position: absolute; top:75px; left:10%; margin-left:-50px; padding:10px; border-radius:4px;}
+  #qrcodeForm{border:1px solid #999; -webkit-box-shadow: 0px 0px 6px #CCC; background-color:#FFF; width:500px; height:580px; position: absolute; top:25px; left:10%; margin-left:-50px; padding:10px; border-radius:4px;}
 </style>
 
 </head>
@@ -20,8 +20,8 @@
 <div id="qrcodeForm">
     <p>Scan QR Code to login or</p>
     <p>
-      <a href="http://setup.a2p3.net/backdoor/login" id="loginBackdoor"> backdoor login </a>
-      <a href="" id="loginMobile" style="text-align:right"> mobile agent login </a>
+      <a href="" id="loginBackdoor"> backdoor login </a>
+        <a href="" id="loginMobile" class="loginStatus"> mobile agent login </a>
     </p>
     <div id="qrcode"></div>
 </div>
@@ -29,61 +29,43 @@
 
 <H1 id='title'>Sample App</H1>
 
-<a href="/documentation">Documentation</a>
-
 <hr>
 
 <table id="profileTable"> </table>
 
 <script type="text/javascript">
 
-  var agentURL = '/'
-
-  $('#qrcodeForm').hide()
-
-  $('#loginMobile').click( function () {
-    window.location( agentURL ) // set to contain Agent Request when login is clicked
-  })
-
-  $('#login').click( function () {
-    $.get( '/login', function ( data, status ) {
-      if (status == "success" && !data.error && data.result && data.result.request) {   // TBD, deal with error
-        agentURL = 'a2p3://token?request=' + data.result.agentRequest + '&state=' + data.result.state
-        $('#qrcodeForm').fadeIn('fast')
-        $('#qrcode').qrcode( {width: 500, height: 500, text: agentURL } )
-      }
-    })
-    return false
-  })
-
-
 function onReady() {
 
-  var agentURL = '/'
-
   $('#qrcodeForm').hide()
-
-  $('#loginMobile').click( function () {
-    window.location( agentURL ) // set to contain Agent Request when login is clicked
-  })
+  $('#logout').hide()
 
   $('#login').click( function () {
     $.get( '/login', function ( data, status ) {
       if (status == "success" && !data.error && data.result && data.result.agentRequest) {   // TBD, deal with error
-        agentURL = 'a2p3://token?request=' + data.result.agentRequest + '&state=' + data.result.state
+        var agentURL = 'a2p3://token?request=' + data.result.agentRequest + '&state=' + data.result.state
+        var backdoorURL = 'http://setup.a2p3.net/backdoor/login?request=' + data.result.agentRequest
+        $('#loginMobile').attr( 'href', agentURL )
+        $('#loginBackdoor').attr( 'href', backdoorURL )
         $('#qrcodeForm').fadeIn('fast')
         $('#qrcode').qrcode( {width: 500, height: 500, text: agentURL } )
+
+// TBD -- need to query to see if we are logged in from mobile agent, and then reload page -- or load profile
+// put profile loading into a separate function, then can call on load, and on successful login
+
       }
     })
     return false
   })
 
   $.get( '/profile', function ( data, status ) {
-    if (status == "success" && !data.error && data.result && data.result.profile) {   // TBD, deal with error
-      var profile = data.result.profile
-      Object.keys( profile ).forEach( function ( rs ) ) {
+    if (status == "success" && !data.error && data.result ) {   // TBD, deal with error
+      $('#logout').show()
+      $('#login').hide()
+      var profile = data.result
+      Object.keys( profile ).forEach( function ( rs ) {
         $('#profileTable').append('<tr><td>' + rs + '</td><td></td><td></td></tr>')
-        Object.keys( profile[rs] ).forEach( funciton ( item ) ) {
+        Object.keys( profile[rs] ).forEach( function ( item ) {
           $('#profileTable').append('<tr><td></td><td>' + item + '</td><td>' + profile[rs][item] + '</td></tr>')
         })
       })

@@ -40,7 +40,7 @@ var EMAIL_RS  = 'email.a2p3.net'
 function login( req, res )  {
   var request = new a2p3.Request(
     { host: HOST_ID
-    , vault: require('./vault.json')
+    , vault: __dirname + '/vault.json'
     , ixURL: 'http://ix.a2p3.net'
     })
   var agentRequest = request.agent( HOST_URL + ':' + HOST_PORT + '/response', RESOURCES )
@@ -108,9 +108,6 @@ function loginResponse( req, res )  {
 function fetchProfile( tokens, a2p3String, callback ) {
   var request = new a2p3.Request( a2p3String )
   var tasks = {}
-
-debugger;
-
   tasks[ EMAIL_RS ] = function ( done ) {
     request.call( EMAIL_PROFILE_URL, done ) }
   tasks[ PEOPLE_RS ] = function ( done ) {
