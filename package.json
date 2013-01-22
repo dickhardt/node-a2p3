@@ -21,6 +21,6 @@
   , "url": "http://github.com:dickhardt/node-A2P3.git"
   }
 , "scripts":
-  { "test": "mocha"
+  { "//": "testing done when testing http://github.com:dickhardt/sample-node-A2P3.git"
   }
 }
