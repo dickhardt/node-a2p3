@@ -21,7 +21,7 @@ NPM module and example apps for [A2P3](http://a2p3.ca)
 
 ####Details
 
-The first time install is run, it will copy the `sample.config.json` file to `config.json` and update the `device`, `appID` and `name` properties. Install will then run `app-registration.js` with `config.json` and register the app with `appID` and `name` at the Registrar, and then at the Email, SI, Health and People Resource Servers and save all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
+The first time install is run, it will create a `config.json` file and set the `device`, `appID` and `name` values. Install will then run `app-registration.js` with `config.json` and register the app with `appID` and `name` at the Registrar, and then at the Email, SI, Health and People Resource Servers and save all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
 
 #### config.json
 
