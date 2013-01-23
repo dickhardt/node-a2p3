@@ -7,25 +7,28 @@
 
 
 NPM module and example apps for [A2P3](http://a2p3.ca)
-##Installation and Setup
 
-####Quick Install
+##Quick Install
 
 
 1. [Register](http://setup.a2p3.net) as a user
 
 2. Create a CLI Agent at [Setup](http://setup.a2p3.net) and save the `device` value
 
-3. `npm install a2p3` and provide the `device` value when prompted and optionally the `appID` and `name` for the app
+3. `npm install a2p3` 
+
+4. Edit the config.json file and edit the `device`, `appID` and `name` for as appropriate
+5. `npm run-script register`
 
 
-####Details
 
-The first time install is run, it will create a `config.json` file and set the `device`, `appID` and `name` values. Install will then run `app-registration.js` with `config.json` and register the app with `appID` and `name` at the Registrar, and then at the Email, SI, Health and People Resource Servers and save all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
+##Installation Details
+
+When installed, a default `config.json` file is created if one does not already exist. The `register.js` script will use the values in `config.json` to register the app with `appID` and `name` at the Registrar, and registers the app at `resources` (defaults to all resource servers - Email, SI, Health and People) and saves all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
 
 #### config.json
 
-The config.json file is used by `app-registration.js` to generate the `vault.json` file, and is used by `server.js` to configure how the server runs. Looked at the `server.js` source to see other defaults that can be changed for more complex development environments.
+The config.json file is used by `register.js` to generate the `vault.json` file, and is passed to modules to configure how calls are made. Looked at the `server.js` source in [sample-node-a2p3](https://github.com/dickhardt/sample-node-a2p3) to see other defaults that can be changed for more complex development environments.
 
 ```
 { "appID": 	"example.com" 			// App hostname
@@ -68,16 +71,14 @@ The `vault.json` file has the keys and key IDs for the Identifier Exchange (obta
   }
 }
 ```
-The easy way to generate a vault.json file is to use the `app-registration` script.
+The easy way to generate a vault.json file is to use the `register.js	` script.
 
 
-#### app-registration.js
-You can generate a new `vault.json` file if you change the `appid` or `resources` in your `config.json` file by running `app-registration.js` directly.
+#### register.js
+If you change the `appid` or `resources` in your `config.json` file, you can generate a new `vault.json` file   
 
-From the app directory,
-
-	node .\node_modules\a2p3\lib\app-registration.js config.json
-
+	npm run-script register
+	
 which will generate a `vault.json` file for you in the current directory assuming all went well.
 
 ##API Documentation

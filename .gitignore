@@ -1,8 +1,7 @@
 .DS_Store
 .dotcloud
 *.log
-config.js
+config.json
+vault.json
 node_modules
 *.sublime-*
-old.*
-*.json

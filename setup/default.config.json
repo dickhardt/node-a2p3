@@ -1,0 +1,10 @@
+{ "appID":  "XXX.example.com"
+, "name": "Example App"
+, "device": "SET THIS TO THE DEVICE VALUE FROM YOUR CLI"
+, "resources":
+  [ "email.a2p3.net"
+  , "people.a2p3.net"
+  , "people.a2p3.net"
+  , "health.a2p3.net"
+  ]
+}

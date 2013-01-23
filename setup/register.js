@@ -1,7 +1,7 @@
 /*
-* app-registration
+* register.js
 *
-* script to register an App at the Registrar and any provided resource servers
+* setup script to register an App at the Registrar and any provided resource servers
 *
 * Copyright (C) Province of British Columbia, 2013
 */
@@ -9,8 +9,24 @@
 var fs = require('fs')
   , async = require('async')
   , urlParse = require('url').parse
-  , jwt = require('./jwt')
-  , fetch = require('./requestJar').fetch // wrapper around request module that deals with cookies across hosts
+  , jwt = require('../lib/jwt')
+  , fetch = require('../lib/requestjar').fetch // wrapper around request module that deals with cookies across hosts
+
+// TBD - change defaults to httpS when certs are available XXXXXXXX
+
+
+/*
+
+TBD
+
+
+
+check if resource is already registered, if so, then just get the keys
+
+*/
+
+var CONFIG_FILE = 'config.json'
+
 
 
 // build our list of known resources
@@ -28,33 +44,32 @@ provinces.forEach( function ( province ) {
 })
 
 function terminate( message ) {
+  console.log('error: '+message)
   console.error('error: '+message)
-  console.error('usage: node app-registration.js app-config.json')
-  console.error('\n\tSee http://github.com/dickhardt/node-A2P3 for details')
   process.exit( 1 )
 }
 
-// no config file, print out help
-if (process.argv.length < 3) terminate('no app-config.json provided')
-var configFile = process.argv[2]
-
 // get config file and check it is sane
-if ( !fs.existsSync( configFile ) ) terminate('could not find "'+configFile+'"')
-var data = fs.readFileSync( configFile )
+if ( !fs.existsSync( CONFIG_FILE ) ) terminate('could not find "'+CONFIG_FILE+'"')
+var data = fs.readFileSync( CONFIG_FILE )
 try {
   var config = JSON.parse(data)
 }
 catch (e) {
-  terminate('Error parsing "'+configFile+'"\n'+e)
+  terminate('Error parsing "'+CONFIG_FILE+'"\n'+e)
 }
-if (!config.host) terminate('"host" is required')
+
+if (!config.appID) terminate('"appID" is required')
 if (!config.name) terminate('"name" is required')
 if (!config.device) terminate('"device" is required')
+
+
+// congig.json parameters used when testing against locally running A2P3 environment
 config.registrar = config.registrar || 'registrar.a2p3.net'
 config.ix = config.ix || 'ix.a2p3.net'
-config.registrarURL = config.registrarURL || 'https://registrar.a2p3.net'
-config.setupURL = config.setupURL || 'https://setup.a2p3.net'
-config.protocol = config.protocol || 'https'
+config.registrarURL = config.registrarURL || 'http://registrar.a2p3.net'
+config.setupURL = config.setupURL || 'http://setup.a2p3.net'
+config.protocol = config.protocol || 'http'
 if (config.protocol == 'https') {
   config.port = config.port || '443'
   config.port = ( config.port == '443' ) ? '' : ':'+config.port
@@ -171,10 +186,10 @@ function addKeyTasks ( rs ) {
     })
   })
   tasks.push( function getKeys ( done ) {
-    console.log('\tRegistering "'+config.host+'" at "'+rs+'"')
+    console.log('\tRegistering "'+config.appID+'" at "'+rs+'"')
     var options =
       { url: resourceURL[rs] + '/dashboard/new/app'
-      , form: { id: config.host }
+      , form: { id: config.appID }
       , method: 'POST'
       }
     if (rs == config.registrar) options.form.name = config.name
