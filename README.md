@@ -15,9 +15,12 @@ NPM module and example apps for [A2P3](http://a2p3.ca)
 
 2. Create a CLI Agent at [Setup](http://setup.a2p3.net) and save the `device` value
 
-3. `npm install a2p3` 
+3. `npm install a2p3`
 
-4. Edit the config.json file and edit the `device`, `appID` and `name` for as appropriate
+4. `cd node_modeules/a2p3
+
+4. Edit the config.json file and fill in the `device` value you got in Step 2, and edit `appID` and `name` as appropriate
+
 5. `npm run-script register`
 
 
@@ -75,10 +78,10 @@ The easy way to generate a vault.json file is to use the `register.js	` script.
 
 
 #### register.js
-If you change the `appid` or `resources` in your `config.json` file, you can generate a new `vault.json` file   
+If you change the `appid` or `resources` in your `config.json` file, you can generate a new `vault.json` file
 
 	npm run-script register
-	
+
 which will generate a `vault.json` file for you in the current directory assuming all went well.
 
 ##API Documentation
