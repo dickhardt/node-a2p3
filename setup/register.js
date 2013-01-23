@@ -19,9 +19,7 @@ var fs = require('fs')
 
 TBD
 
-
-
-check if resource is already registered, if so, then just get the keys
+Check that the device value in config.json has been changed ...
 
 */
 
@@ -44,7 +42,6 @@ provinces.forEach( function ( province ) {
 })
 
 function terminate( message ) {
-  console.log('error: '+message)
   console.error('error: '+message)
   process.exit( 1 )
 }
@@ -59,6 +56,8 @@ catch (e) {
   terminate('Error parsing "'+CONFIG_FILE+'"\n'+e)
 }
 
+if (config.device == "SET THIS TO THE DEVICE VALUE FROM YOUR CLI")
+  terminate('\n\nNot so good at following directions eh?\nGet a "device" value from a CLI at http://setup.a2p3.net and put it into config.json\n')
 if (!config.appID) terminate('"appID" is required')
 if (!config.name) terminate('"name" is required')
 if (!config.device) terminate('"device" is required')
@@ -146,8 +145,10 @@ function addKeyTasks ( rs ) {
       if ( e ) return done( e )
       if ( response.statusCode != 200 && response.statusCode != 302 )
         return done('"'+rs+'" returned '+response.statusCode)
+      if (json.error)
+        return done("Received error:"+JSON.stringify(json.error))
       if (!json || !json.result || !json.result.token)
-        return done('Did not expect"'+json.stringify+'"')
+        return done('Did not expect"'+JSON.stringify(json)+'"')
       // save code for next step
       ixToken = json.result.token
       done( null )
@@ -186,13 +187,14 @@ function addKeyTasks ( rs ) {
     })
   })
   tasks.push( function getKeys ( done ) {
-    console.log('\tRegistering "'+config.appID+'" at "'+rs+'"')
+    // frist we see if we can read existing keys in case the app was already registered
+    console.log('\tGetting keys at '+rs)
+    console.log('\tChecking if "'+config.appID+'" registered at "'+rs+'"')
     var options =
-      { url: resourceURL[rs] + '/dashboard/new/app'
+      { url: resourceURL[rs] + '/dashboard/getkey'
       , form: { id: config.appID }
       , method: 'POST'
       }
-    if (rs == config.registrar) options.form.name = config.name
     fetch( options, function ( e, response, body ) {
       var r = null
       if ( e ) return done( e )
@@ -204,17 +206,50 @@ function addKeyTasks ( rs ) {
       catch (e) {
         return done( e )
       }
-      if (!r || !r.result)
+      if (!r)
         return done('Did not expect"'+body+'"')
-      if (r.result.key) { // regular resource or Registrar
-        vault[rs] = r.result.key
-        if (rs == config.registrar) vault[config.ix] = r.result.key
-      } else { // standardized resource
-        Object.keys(r.result).forEach( function ( host ) {
-          vault[host] = r.result[host]
+      if (!r.error) {
+        if (r.result && r.result.key) { // regular resource or Registrar
+          vault[rs] = r.result.key
+          if (rs == config.registrar) vault[config.ix] = r.result.key
+        } else { // standardized resource
+          Object.keys(r.result).forEach( function ( host ) {
+            vault[host] = r.result[host]
+          })
+        }
+        done( null )
+      } else {  // we got an error, try registering the app
+        console.log('\tRegistering "'+config.appID+'" at "'+rs+'"')
+        var options =
+          { url: resourceURL[rs] + '/dashboard/new/app'
+          , form: { id: config.appID }
+          , method: 'POST'
+          }
+        if (rs == config.registrar) options.form.name = config.name
+        fetch( options, function ( e, response, body ) {
+          var r = null
+          if ( e ) return done( e )
+          if ( response.statusCode != 200 )
+            return done('"'+rs+'" returned '+response.statusCode)
+          try {
+            r = JSON.parse( body )
+          }
+          catch (e) {
+            return done( e )
+          }
+          if (!r || !r.result)
+            return done('Did not expect"'+body+'"')
+          if (r.result.key) { // regular resource or Registrar
+            vault[rs] = r.result.key
+            if (rs == config.registrar) vault[config.ix] = r.result.key
+          } else { // standardized resource
+            Object.keys(r.result).forEach( function ( host ) {
+              vault[host] = r.result[host]
+            })
+          }
+          done( null )
         })
       }
-      done( null )
     })
   })
 }
