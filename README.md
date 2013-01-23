@@ -1,4 +1,4 @@
-#A2P3
+#node-a2p3
 
 #WARNING - THIS DOCUMENTATION IS PREMATURE
 
@@ -6,7 +6,7 @@
 >*thanks for your understanding!*
 
 
-NPM module and example apps for [A2P3](http://a2p3.ca)
+npm module for [A2P3](http://a2p3.ca)
 
 ##Quick Install
 
@@ -17,21 +17,21 @@ NPM module and example apps for [A2P3](http://a2p3.ca)
 
 3. `npm install a2p3`
 
-4. `cd node_modeules/a2p3
+4. `cd node_modules/a2p3`
 
-4. Edit the config.json file and fill in the `device` value you got in Step 2, and edit `appID` and `name` as appropriate
+5. Edit the config.json file and edit the `device`, `appID` and `name` for as appropriate
 
-5. `npm run-script register`
+6. `npm run-script register`
 
 
 
 ##Installation Details
 
-When installed, a default `config.json` file is created if one does not already exist. The `register.js` script will use the values in `config.json` to register the app with `appID` and `name` at the Registrar, and registers the app at `resources` (defaults to all resource servers - Email, SI, Health and People) and saves all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
+When installed, a default `config.json` file is created in node_modules/a2p3 if one does not already exist. The `register.js` script will use the values in `config.json` to register the app with `appID` and `name` at the Registrar, and registers the app at the configured `resources` (defaults to all resource servers - Email, SI, Health and People) and saves all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
 
 #### config.json
 
-The config.json file is used by `register.js` to generate the `vault.json` file, and is passed to modules to configure how calls are made. Looked at the `server.js` source in [sample-node-a2p3](https://github.com/dickhardt/sample-node-a2p3) to see other defaults that can be changed for more complex development environments.
+A config.json file must exist in `node_modules/a2p3` and configures how `register.js` will generate the `vault.json` file, and configures `a2p3`. Looked at the `register.js` source to see other defaults that can be changed for more complex development environments.
 
 ```
 { "appID": 	"example.com" 			// App hostname
@@ -48,7 +48,7 @@ The config.json file is used by `register.js` to generate the `vault.json` file,
 ```
 
 ####vault.json
-The `vault.json` file has the keys and key IDs for the Identifier Exchange (obtained when registering the App at the Registrar) and from each Resource Server. Here is a sample file:
+A `vault.json` file must exist in `node_modules/a2p3` and has the keys and key IDs for the Identifier Exchange (obtained when registering the App at the Registrar) and for any Resource Server. Here is a sample file:
 
 ```
 { "ix.a2p3.net":
@@ -74,7 +74,7 @@ The `vault.json` file has the keys and key IDs for the Identifier Exchange (obta
   }
 }
 ```
-The easy way to generate a vault.json file is to use the `register.js	` script.
+The easy way to generate a vault.json file is to use the `register.js` script.
 
 
 #### register.js
@@ -82,16 +82,14 @@ If you change the `appid` or `resources` in your `config.json` file, you can gen
 
 	npm run-script register
 
-which will generate a `vault.json` file for you in the current directory assuming all went well.
+which will generate a new `vault.json` file in `node_modules/a2p3` for you assuming all went well.
 
 ##API Documentation
-####agentRequest( config, vault, returnURL, [resources] )
+####agentRequest( returnURL, [resources] )
 
-Creates an Agent Request for any supplied `resources` based on the `config`, `vault` and `returnURL` values.
+Creates an Agent Request for any supplied `resources` that will return to `returnURL` when passed to an Agent.
 
 	var a2p3 = require('a2p3')
-      , config = require('./config')
-      , vault = require('./vault')
 
     var returnURL = 'http://localhost:8080'
       , resources =
@@ -99,12 +97,12 @@ Creates an Agent Request for any supplied `resources` based on the `config`, `va
           , 'https://people.a2p3.net/scope/namePhoto'
           ]
 
-    var agentRequest = a2p3.agentRequest( config, vault, returnURL, resources )
+    var agentRequest = a2p3.agentRequest( returnURL, resources )
 
 
-####Resource( config, vault )
+####Resource( )
 
-Creates an A2P3 Resource object based on the `config` and `vault`.
+Creates an A2P3 Resource object.
 
 
 ####Resource.exchange( agentRequest, ixToken, callback )
@@ -139,8 +137,6 @@ Calls all supplied APIs in parrelel with the supplied parameters. All resource s
 
 ```
 var a2p3 = require('a2p3')
-  , config = require('./config')
-  , vault = require('./vault')
 
 var returnURL = 'http://localhost:8080'
   , resources =
@@ -149,7 +145,7 @@ var returnURL = 'http://localhost:8080'
     , 'https://health.a2p3.net/scope/prov_number'
     ]
 
-var agentRequest = a2p3.agentRequest( config, vault, returnURL, resources )
+var agentRequest = a2p3.agentRequest( returnURL, resources )
 
 // send agentReqest to Agent, get back ixToken
 
