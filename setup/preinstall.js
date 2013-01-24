@@ -8,7 +8,7 @@ var fs = require('fs')
   , util = require('util')
   , crypto = require('crypto')
 
-var CONFIG_FILE = process.cwd + '/config.json'
+var CONFIG_FILE = process.cwd() + '/config.json'
 
 function randomString () {
   return crypto.randomBytes( 8 ).toString( 'hex' )
