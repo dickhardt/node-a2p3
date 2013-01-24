@@ -56,7 +56,7 @@ catch (e) {
   terminate('Error parsing "'+CONFIG_FILE+'"\n'+e)
 }
 
-if (config.device == "SET THIS TO THE DEVICE VALUE FROM YOUR CLI")
+if (config.device == "SET_THIS_TO_THE_DEVICE_VALUE_FROM_YOUR_CLI_AGENT")
   terminate('\n\nNot so good at following directions eh?\nGet a "device" value from a CLI at http://setup.a2p3.net and put it into config.json\n')
 if (!config.appID) terminate('"appID" is required')
 if (!config.name) terminate('"name" is required')
