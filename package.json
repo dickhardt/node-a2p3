@@ -1,5 +1,5 @@
 { "name": "a2p3"
-, "version": "0.0.8"
+, "version": "0.0.9"
 , "description": "Node module and sample apps for A2P3 Proof of Concept"
 , "keywords": ["A2P3","a2p3","identity"]
 , "homepage": "http://a2p3.ca"
