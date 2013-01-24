@@ -23,9 +23,8 @@ Check that the device value in config.json has been changed ...
 
 */
 
-var CONFIG_FILE = 'config.json'
-
-
+var CONFIG_FILE = __dirname + '/../../../config.json'
+var VAULT_FILE = __dirname + '/../../../vault.json'
 
 // build our list of known resources
 var provinces =
@@ -266,7 +265,7 @@ Object.keys( resourceURL ).forEach( function (rs) {
 tasks.push( function writeVault() {
   var data = JSON.stringify( vault )
   console.log('... writing "vault.json"')
-  fs.writeFileSync( 'vault.json', data)
+  fs.writeFileSync( VAULT_FILE, data)
 })
 
 // go execute all our tasks now!

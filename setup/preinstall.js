@@ -8,16 +8,19 @@ var fs = require('fs')
   , util = require('util')
   , crypto = require('crypto')
 
+var CONFIG_FILE = __dirname + '/../../../config.json'
+
+
 function randomString () {
   return crypto.randomBytes( 8 ).toString( 'hex' )
 }
 
-if ( fs.existsSync('config.json') ) {
+if ( fs.existsSync( CONFIG_FILE ) ) {
   console.log('Using existing config.json')
 } else {
   console.log( 'Creating config.json' )
   var data = fs.readFileSync( __dirname + '/default.config.json' ).toString()
   // prepend random string so that AppID is unique if not changed
   data = data.replace( /XXX/g , randomString() )
-  fs.writeFileSync( 'config.json', data )
+  fs.writeFileSync( CONFIG_FILE, data )
 }
