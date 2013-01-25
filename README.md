@@ -98,7 +98,7 @@ Initializes the a2p3 module with the vales in `config.json` and `vault.json`.
 ```javascript
 
 var a2p3 = require('a2p3')
-a2p3.init( require('./config.json', require('./vault.json) )
+a2p3.init( require('./config.json', require('./vault.json') )
 
 ```
 
@@ -156,7 +156,7 @@ Calls all supplied APIs in parrelel with the supplied parameters. All resource s
 
 ```javascript
 var a2p3 = require('a2p3')
-a2p3.init( require('./config.json', require('./vault.json) )
+a2p3.init( require('./config.json', require('./vault.json') )
 
 var returnURL = 'http://localhost:8080'
   , resources =
