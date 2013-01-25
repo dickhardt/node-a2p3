@@ -93,7 +93,7 @@ This command will generate a new `vault.json` file in the current directory for 
 ##API Documentation
 
 ####init( config, vault )
-Initializes the a2p3 module with the vales in config and vault.
+Initializes the a2p3 module with the vales in `config.json` and `vault.json`.
 
 ```javascript
 
