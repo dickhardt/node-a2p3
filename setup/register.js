@@ -20,7 +20,7 @@ function terminate( message ) {
   process.exit( 1 )
 }
 
-var CONFIG_FILE = process.argv[3]
+var CONFIG_FILE = process.argv[2]
 
 if (!CONFIG_FILE) terminate('register.js needs a config file')
 if (!fs.existsSync(CONFIG_FILE)) terminate('does not look like '+CONFIG_FILE+'is a file')
