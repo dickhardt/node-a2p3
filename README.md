@@ -85,18 +85,30 @@ If you change the `appid` or `resources` in your `config.json` file, you can gen
 which will generate a new `vault.json` file in `node_modules/a2p3` for you assuming all went well.
 
 ##API Documentation
+
+####init( config, vault )
+Initializes the a2p3 module with the vales in config and vault.
+
+```javascript
+
+var a2p3 = require('a2p3')
+a2p3.init( require('./config.json', require('./vault.json) )
+
+```
+
 ####agentRequest( returnURL, [resources] )
 
 Creates an Agent Request for any supplied `resources` that will return to `returnURL` when passed to an Agent.
 
 ```javascript
 var a2p3 = require('a2p3')
+a2p3.init( require('./config.json', require('./vault.json) )
 
-  var returnURL = 'http://localhost:8080'
-    , resources =
-      [ 'https://email.a2p3.net/scope/default'
-        , 'https://people.a2p3.net/scope/namePhoto'
-        ]
+var returnURL = 'http://localhost:8080'
+  , resources =
+  	[ 'https://email.a2p3.net/scope/default'
+    , 'https://people.a2p3.net/scope/namePhoto'
+    ]
 
   var agentRequest = a2p3.agentRequest( returnURL, resources )
 ```
