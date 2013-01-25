@@ -27,11 +27,13 @@ npm module for [A2P3](http://a2p3.ca)
 
 ##Installation Details
 
-When installed, a default `config.json` file is created in `node_modules/a2p3` if one does not already exist. The `register.js` script will use the values in `config.json` to register the app with `appID` and `name` at the Registrar, and registers the app at the configured `resources` (defaults to all resource servers - Email, SI, Health and People) and saves all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
+When installed, a default `config.json` file is created in `node_modules/a2p3` if one does not already exist. This file shold be copied up into your application directory and the `device` parameter must be inserted.
+
+The `register.js` script will use the values in `config.json` to register the app with `appID` and `name` at the Registrar, and registers the app at the configured `resources` (defaults to all resource servers - Email, SI, Health and People) and saves all the keys and key IDs into `vault.json`. See the **vault.json** section for more details. You should keep the contents of your `vault.json` file secret!
 
 #### config.json
 
-A config.json file must exist in `node_modules/a2p3` and configures how `register.js` will generate the `vault.json` file, and configures `a2p3`. Looked at the `register.js` source to see other defaults that can be changed for more complex development environments.
+A config.json file configures how `register.js` will generate the `vault.json` file, and configures `a2p3`. Looked at the `register.js` source to see other defaults that can be changed for more complex development environments.
 
 ```json
 { "appID": 	"example.com" 			// App hostname
@@ -48,7 +50,7 @@ A config.json file must exist in `node_modules/a2p3` and configures how `registe
 ```
 
 ####vault.json
-A `vault.json` file must exist in `node_modules/a2p3` and has the keys and key IDs for the Identifier Exchange (obtained when registering the App at the Registrar) and for any Resource Server. Here is a sample file:
+A `vault.json` file has the keys and key IDs for the Identifier Exchange (obtained when registering the App at the Registrar) and for any Resource Server. Here is a sample file:
 
 ```json
 { "ix.a2p3.net":
@@ -80,9 +82,13 @@ The easy way to generate a vault.json file is to use the `register.js` script.
 #### register.js
 If you change the `appid` or `resources` in your `config.json` file, you can generate a new `vault.json` file
 
-	npm run-script register
+	node node_modules\a2p3\setup\register.js config.json
 
-which will generate a new `vault.json` file in `node_modules/a2p3` for you assuming all went well.
+This assumes config.json is in the current directory.
+This command will generate a new `vault.json` file in the current directory for you assuming all went well.
+
+
+
 
 ##API Documentation
 
