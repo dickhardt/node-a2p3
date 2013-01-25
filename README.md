@@ -108,7 +108,7 @@ Creates an Agent Request for any supplied `resources` that will return to `retur
 
 ```javascript
 var a2p3 = require('a2p3')
-a2p3.init( require('./config.json', require('./vault.json) )
+a2p3.init( require('./config.json', require('./vault.json') )
 
 var returnURL = 'http://localhost:8080'
   , resources =
