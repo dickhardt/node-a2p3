@@ -4,8 +4,6 @@
 * Copyright (C) Province of British Columbia, 2013
 */
 
-console.log(process.env)
-
 var fs = require('fs')
   , util = require('util')
   , crypto = require('crypto')

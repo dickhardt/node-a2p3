@@ -15,16 +15,24 @@ var fs = require('fs')
 // TBD - change defaults to httpS when certs are available XXXXXXXX
 
 
-/*
+function terminate( message ) {
+  console.error('error: '+message)
+  process.exit( 1 )
+}
 
-TBD
+var CONFIG_FILE = process.argv[3]
 
-Check that the device value in config.json has been changed ...
+if (!CONFIG_FILE) terminate('register.js needs a config file')
+if (!fs.existsSync(CONFIG_FILE)) terminate('does not look like '+CONFIG_FILE+'is a file')
+var data = fs.readFileSync( CONFIG_FILE )
+try {
+  var config = JSON.parse(data)
+}
+catch (e) {
+  terminate('Error parsing "'+CONFIG_FILE+'"\n'+e)
+}
 
-*/
-
-var CONFIG_FILE = __dirname + '/../../../config.json'
-var VAULT_FILE = __dirname + '/../../../vault.json'
+var VAULT_FILE = process.cwd() + '/vault.json'
 
 // build our list of known resources
 var provinces =
@@ -39,21 +47,6 @@ provinces.forEach( function ( province ) {
   knownResources['people.'+province+'.a2p3.net'] = true
   knownResources['health.'+province+'.a2p3.net'] = true
 })
-
-function terminate( message ) {
-  console.error('error: '+message)
-  process.exit( 1 )
-}
-
-// get config file and check it is sane
-if ( !fs.existsSync( CONFIG_FILE ) ) terminate('could not find "'+CONFIG_FILE+'"')
-var data = fs.readFileSync( CONFIG_FILE )
-try {
-  var config = JSON.parse(data)
-}
-catch (e) {
-  terminate('Error parsing "'+CONFIG_FILE+'"\n'+e)
-}
 
 if (config.device == "SET_THIS_TO_THE_DEVICE_VALUE_FROM_YOUR_CLI_AGENT")
   terminate('\n\nNot so good at following directions eh?\nGet a "device" value from a CLI at http://setup.a2p3.net and put it into config.json\n')
