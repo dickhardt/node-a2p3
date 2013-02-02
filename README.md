@@ -1,10 +1,6 @@
 #node-a2p3
 
-#WARNING - THIS DOCUMENTATION IS PREMATURE
-
-#THE HTTPS LINKS DO NOT WORK YET, IF USING, YOU WILL NEED TO OVERIDE THE ixURL and registrarURL
->*thanks for your understanding!*
-
+#WARNING - THIS DOCUMENTATION IS EARLY - RESOURCES ARE CURRENTLY AT 'HTTP', not 'HTTPS'
 
 npm module for [A2P3](http://a2p3.ca)
 
@@ -36,10 +32,10 @@ The `register.js` script will use the values in `config.json` to register the ap
 A config.json file configures how `register.js` will generate the `vault.json` file, and configures `a2p3`. Looked at the `register.js` source to see other defaults that can be changed for more complex development environments.
 
 ```json
-{ "appID": 	"example.com" 			// App hostname
-, "name":	"Example App"			// App friendly name
+{ "appID": 	"app.example.com"       // App hostname
+, "name":	"Example App"			        // App friendly name
 , "device": "NQLKKnfIc3RbY4a2JRwP"	// CLI Agent device parameter
-, "port": 	8080					// port server will listen on
+, "port": 	8080					          // port server will listen on
 , "resources":
 	[ "email.a2p3.net"				// array of resource hostnames
 	, "people.a2p3.net"				// to register App at
