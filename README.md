@@ -91,28 +91,35 @@ This command will generate a new `vault.json` file in the current directory for 
 ####init( config, vault )
 Initializes the a2p3 module with the vales in `config.json` and `vault.json`.
 
-```javascript
-
+``` javascript
 var a2p3 = require('a2p3')
 a2p3.init( require('./config.json', require('./vault.json') )
 
 ```
 
-####agentRequest( returnURL, [resources] )
 
-Creates an Agent Request for any supplied `resources` that will return to `returnURL` when passed to an Agent.
+####agentRequest( params )
+
+Creates an Agent Request using the supplied `params` object with the following properties: 
+
+- `returnURL` or `callbackURL`: where the Agent will return results for the Agent Request. If `returnURL`, the Agent will send back results via a redirected GET. If `callbackURL`, the Agent will POST the results to the URL as a JSON message. REQUIRED.
+
+- `resources`: an array of resources the application would like authorization from the User to access. OPTIONAL
+
 
 ```javascript
 var a2p3 = require('a2p3')
 a2p3.init( require('./config.json', require('./vault.json') )
 
-var returnURL = 'http://localhost:8080'
-  , resources =
-  	[ 'https://email.a2p3.net/scope/default'
-    , 'https://people.a2p3.net/scope/namePhoto'
-    ]
+var params =
+	{ returnURL = 'http://localhost:8080'
+  	, resources =
+  		[ 'https://email.a2p3.net/scope/default'
+    	, 'https://people.a2p3.net/scope/namePhoto'
+    	]
+    }
 
-  var agentRequest = a2p3.agentRequest( returnURL, resources )
+  var agentRequest = a2p3.agentRequest( params )
 ```
 
 ####Resource( )
