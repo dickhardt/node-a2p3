@@ -88,19 +88,9 @@ This command will generate a new `vault.json` file in the current directory for 
 
 ##API Documentation
 
-####init( config, vault )
-Initializes the a2p3 module with the vales in `config.json` and `vault.json`.
+####agentRequest( config, vault, params )
 
-``` javascript
-var a2p3 = require('a2p3')
-a2p3.init( require('./config.json', require('./vault.json') )
-
-```
-
-
-####agentRequest( params )
-
-Creates an Agent Request using the supplied `params` object with the following properties: 
+Creates an Agent Request using the values in `config`, `vault` and the supplied `params` object with the following properties: 
 
 - `returnURL` or `callbackURL`: where the Agent will return results for the Agent Request. If `returnURL`, the Agent will send back results via a redirected GET. If `callbackURL`, the Agent will POST the results to the URL as a JSON message. REQUIRED.
 
@@ -109,9 +99,9 @@ Creates an Agent Request using the supplied `params` object with the following p
 
 ```javascript
 var a2p3 = require('a2p3')
-a2p3.init( require('./config.json', require('./vault.json') )
-
-var params =
+  , config = require('./config.json')
+  , vault = require('./vault.json')
+  , params =
 	{ returnURL = 'http://localhost:8080'
   	, resources =
   		[ 'https://email.a2p3.net/scope/default'
@@ -119,12 +109,12 @@ var params =
     	]
     }
 
-  var agentRequest = a2p3.agentRequest( params )
+var agentRequest = a2p3.agentRequest( config, vault, params )
 ```
 
-####Resource( )
+####Resource( config, vault )
 
-Creates an A2P3 Resource object.
+Creates an A2P3 Resource object using the values in `config` and `vault`.
 
 
 ####Resource.exchange( agentRequest, ixToken, callback )
@@ -138,7 +128,7 @@ Exchanges an Agent Request and IX Token at the Identifier Exchange for the Apps 
 
 ####Resource.call( api, [params], callback )
 
-Calls the API with any parameters. If the api is a to standaridized resource server, the host will be replaced with the first redirected resource server returned from the IX. To get results from all resource servers, use **Resource.callMultiple**
+Calls the API with any parameters. **Resource.exchange()** MUST have been called previously. If the api is a to standaridized resource server, the host will be replaced with the first redirected resource server returned from the IX. To get results from all resource servers, use **Resource.callMultiple()**
 
 - api - the URL to the API
 - params - the parameters (if supplied) to be passed in the API. The required RS token parameter will be added automatically.
@@ -147,7 +137,7 @@ Calls the API with any parameters. If the api is a to standaridized resource ser
 
 ####Resource.callMultiple( details, callback )
 
-Calls all supplied APIs in parrelel with the supplied parameters. All resource servers provided by the Identifier Exchange for a standardize resource are called for any standardized resource API provided.
+Calls all supplied APIs in parrelel with the supplied parameters. **Resource.exchange()** MUST have been called previously.  All resource servers provided by the Identifier Exchange for a standardize resource are called for any standardized resource API provided.
 
 - details - an object mapping resource APIs to params
 - callback( errors, results ) - A callback which returns an errors and results object.
@@ -155,33 +145,35 @@ Calls all supplied APIs in parrelel with the supplied parameters. All resource s
 	- results - the results from each API call using the hostID. If the API is a standardized resource, then a list of host redirects will be provided.
 
 
-##Example
+##Full Example
 
 ```javascript
 var a2p3 = require('a2p3')
-a2p3.init( require('./config.json', require('./vault.json') )
-
-var returnURL = 'http://localhost:8080'
+  , config = require('./config.json')
+  , vault = require('./vault.json')
+  , params = 
+  { returnURL = 'http://localhost:8080'
   , resources =
     [ 'https://email.a2p3.net/scope/default'
     , 'https://people.a2p3.net/scope/namePhoto'
     , 'https://health.a2p3.net/scope/prov_number'
     ]
-
-var agentRequest = a2p3.agentRequest( returnURL, resources )
+  }
+  
+var agentRequest = a2p3.agentRequest( config, vault, params )
 
 // send agentReqest to Agent, get back ixToken
 
-var resources new a2p3.Resources( config, vault )
+var rs new a2p3.Resources( config, vault )
   , details =
     { 'https://email.a2p3.net/email/default': null
     , 'https://people.a2p3.net/namePhoto': null
     , 'https://health.a2p3.net/prov_number': null
     }
-resources.exchange( agentRequest, ixToken, function ( error, di ) {
+rs.exchange( agentRequest, ixToken, function ( error, di ) {
   if (!error) {
     console.log( di ) // { result: { sub: 'v1Gx5AsOf_91wjDQAwPsvrP' }}
-    resources.callMultiple( details, function ( errors, results ) {
+    rs.callMultiple( details, function ( errors, results ) {
       if (!errors) {
         console.log( results )
       }
