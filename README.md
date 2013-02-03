@@ -90,7 +90,7 @@ This command will generate a new `vault.json` file in the current directory for 
 
 ####agentRequest( config, vault, params )
 
-Creates an Agent Request using the values in `config`, `vault` and the supplied `params` object with the following properties: 
+Creates an Agent Request using the values in `config`, `vault` and the supplied `params` object with the following properties:
 
 - `returnURL` or `callbackURL`: where the Agent will return results for the Agent Request. If `returnURL`, the Agent will send back results via a redirected GET. If `callbackURL`, the Agent will POST the results to the URL as a JSON message. REQUIRED.
 
@@ -111,6 +111,11 @@ var a2p3 = require('a2p3')
 
 var agentRequest = a2p3.agentRequest( config, vault, params )
 ```
+
+####random16bytes()
+
+Helper routine that generates 16 bytes of random data encoded as a URL safe base 64 string.
+
 
 ####Resource( config, vault )
 
@@ -151,7 +156,7 @@ Calls all supplied APIs in parrelel with the supplied parameters. **Resource.exc
 var a2p3 = require('a2p3')
   , config = require('./config.json')
   , vault = require('./vault.json')
-  , params = 
+  , params =
   { returnURL = 'http://localhost:8080'
   , resources =
     [ 'https://email.a2p3.net/scope/default'
@@ -159,7 +164,7 @@ var a2p3 = require('a2p3')
     , 'https://health.a2p3.net/scope/prov_number'
     ]
   }
-  
+
 var agentRequest = a2p3.agentRequest( config, vault, params )
 
 // send agentReqest to Agent, get back ixToken
