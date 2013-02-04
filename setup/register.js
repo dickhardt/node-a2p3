@@ -159,7 +159,7 @@ function addKeyTasks ( rs ) {
       if ( response.statusCode != 304 && response.statusCode != 302 )
         return done('"'+rs+'" returned '+response.statusCode)
       if ( !response.headers || !response.headers.location ||
-            response.headers.location != resourceURL[rs] + '/dashboard')
+            response.headers.location != '/dashboard')
         return done('Was sent not redirected to /dashboard')
       done( null )
     })
