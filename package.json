@@ -1,5 +1,5 @@
 { "name": "a2p3"
-, "version": "0.2.4"
+, "version": "0.2.5"
 , "description": "Node module bulding Apps for A2P3 Proof of Concept"
 , "keywords": ["A2P3","a2p3","identity"]
 , "homepage": "http://a2p3.ca"
@@ -16,7 +16,7 @@
   , "url": "http://github.com:dickhardt/node-A2P3.git"
   }
 , "scripts":
-  { "preinstall": "node setup/preinstall.js"
+  { "config": "node setup/config.js"
   , "register": "node setup/register.js"
   }
 }
