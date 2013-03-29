@@ -157,8 +157,8 @@ var a2p3 = require('a2p3')
   , config = require('./config.json')
   , vault = require('./vault.json')
   , params =
-  { returnURL = 'http://localhost:8080'
-  , resources =
+  { returnURL: 'http://localhost:8080'
+  , resources:
     [ 'https://email.a2p3.net/scope/default'
     , 'https://people.a2p3.net/scope/namePhoto'
     , 'https://health.a2p3.net/scope/prov_number'
