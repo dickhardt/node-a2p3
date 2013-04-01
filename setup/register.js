@@ -217,7 +217,11 @@ function addKeyTasks ( rs ) {
           , form: { id: config.appID }
           , method: 'POST'
           }
-        if (rs == config.registrar) options.form.name = config.name
+        if (rs == config.registrar) {
+          options.form.name = config.name
+          if (config.anytime)
+            options.form.anytime = true
+        }
         fetch( options, function ( e, response, body ) {
           var r = null
           if ( e ) return done( e )
