@@ -48,8 +48,12 @@ provinces.forEach( function ( province ) {
   knownResources['health.'+province+'.a2p3.net'] = true
 })
 
+if (config.appID == "SET_THIS_TO_BE_THE_HOSTNAME_YOU_CAN_RUN_ON")
+  terminate('\n\nNot so good at following directions eh?\nset the appID in config.json to be a hostname where you are running the server. Needs to be globally unique.\n')
+if (config.device == "SET_THIS_TO_THE_TOKEN_VALUE_FROM_YOUR_CLI_AGENT")
+  terminate('\n\nNot so good at following directions eh?\nGet a "token" value from a CLI at http://setup.a2p3.net and put it into config.json (must be from same CLI as the device\n')
 if (config.device == "SET_THIS_TO_THE_DEVICE_VALUE_FROM_YOUR_CLI_AGENT")
-  terminate('\n\nNot so good at following directions eh?\nGet a "device" value from a CLI at http://setup.a2p3.net and put it into config.json\n')
+  terminate('\n\nNot so good at following directions eh?\nGet a "device" value from a CLI at http://setup.a2p3.net and put it into config.json (must be from same CLI as the token\n')
 if (!config.appID) terminate('"appID" is required')
 if (!config.name) terminate('"name" is required')
 if (!config.device) terminate('"device" is required')
