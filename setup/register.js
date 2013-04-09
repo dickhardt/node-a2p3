@@ -182,6 +182,19 @@ function addKeyTasks ( rs ) {
       done( null )
     })
   })
+  tasks.push( function fetchDashboard ( done ) {
+    console.log('\tListing apps to prime what user is authoritative for at ',resourceURL[rs])
+    var options =
+      { url: resourceURL[rs] + '/dashboard/list/apps'
+      , method: 'POST'
+      }
+    fetch( options, function ( e, response ) {
+      if ( e ) return done( e )
+      if ( response.statusCode != 200 )
+        return done('"'+rs+'" returned '+response.statusCode)
+      done( null )
+    })
+  })
   tasks.push( function getKeys ( done ) {
     // frist we see if we can read existing keys in case the app was already registered
     console.log('\tGetting keys at '+rs)
